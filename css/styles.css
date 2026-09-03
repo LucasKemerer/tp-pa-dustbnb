@@ -1,3 +1,52 @@
+/* 1. Definimos tu paleta de colores en el :root para usarlos fácil en todo el archivo */
+:root {
+  --dust-primary: #826e51;
+  --dust-dark: #664930;
+  --dust-secondary: #997e67;
+  --dust-tertiary: #a5937b;
+  --dust-bg: #efeae4;
+  --dust-surface: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #ededed;
+  background-color: var(--dust-bg);
+}
+
+.logo-dust path {
+  fill: var(--dust-primary);
+}
+
+.btn-primary {
+  background-color: var(--dust-primary);
+  border-color: var(--dust-primary);
+  color: white;
+}
+.btn-primary:disabled {
+  background-color: var(--dust-secondary);
+  border-color: var(--dust-secondary);
+  opacity: 0.7;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--dust-dark);
+  border-color: var(--dust-dark);
+}
+
+footer {
+  background-color: var(--dust-bg);
+  color: var(--dust-dark);
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border-top: var(--dust-dark) 1px;
+}
+
+.form-control:focus {
+  border-color: var(--dust-primary);
+  box-shadow: 0 0 0 0.25rem rgba(130, 110, 81, 0.25);
 }
