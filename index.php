@@ -257,7 +257,7 @@ require 'includes/header.php';
                     
                     <!-- Boton Ingresar -->
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary text-white" id="btnIngresar" >
+                        <button type="submit" class="btn btn-primary text-white" id="btnIngresar" disabled >
                             Ingresar
                         </button>
                     </div>
