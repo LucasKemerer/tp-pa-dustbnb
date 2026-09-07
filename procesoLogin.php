@@ -19,7 +19,6 @@ $autenticado = $esPost && hash_equals($usuarioValido, $usuario) && hash_equals($
     <main class="container py-5 text-center">
         <?php if ($autenticado): ?>
             <h1>ingreso correctamente</h1>
-            <a class="btn btn-primary text-white" href="index.php">Volver al formulario</a>
         <?php else: ?>
             <h1>Usuario o contraseña incorrectos</h1>
             <p>Verificá los datos e intentá nuevamente.</p>
