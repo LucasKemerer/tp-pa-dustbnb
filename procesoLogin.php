@@ -281,7 +281,6 @@ require 'includes/header.php';
             </div>
         </div>
     </div>
-</div>
 
 <?php
     require 'includes/footer.php';

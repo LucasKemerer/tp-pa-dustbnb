@@ -14,5 +14,5 @@ function validarDatos() {
 }
 
 // Se agregan los escuchadores para detectar cambios en los input
-inputUsuario.addEventListener("input", validarDatos);
-inputContrasena.addEventListener("input", validarDatos);
+inputUsuario?.addEventListener("input", validarDatos);
+inputContrasena?.addEventListener("input", validarDatos);
