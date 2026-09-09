@@ -17,7 +17,7 @@ $mensajeExito = '<div>
                             Permitirá controlar la disponibilidad de los departamentos y mantener el registro de huéspedes.
                         </p>
 
-                        <a href="index.php" class="btn btn-danger-outline px-4 py-2">
+                        <a href="index.php" class="btn btn-outline-danger px-4 py-2">
                             Cerrar Sesión
                         </a>
                     </div>';
