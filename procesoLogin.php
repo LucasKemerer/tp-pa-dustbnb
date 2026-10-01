@@ -33,6 +33,7 @@ $mensajeError = '<div>
                         </a>
                     </div>';
 
+$ocultar_nav = true; // variable para ocultar el header
 require 'includes/header.php';
 ?>
 
