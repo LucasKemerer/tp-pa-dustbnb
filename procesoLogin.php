@@ -1,36 +1,39 @@
 <?php
+session_start();
+
 $usuarioValido = 'fcytuader';
 $contrasenaValida = 'programacionavanzada';
 
 $usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
 $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
+$captcha = isset($_POST['captcha']) ? strtoupper(trim($_POST['captcha'])) : '';
+$captchaGenerado = isset($_SESSION['captcha']) ? $_SESSION['captcha'] : '';
+unset($_SESSION['captcha']);
+
 $esPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-$autenticado = $esPost && hash_equals($usuarioValido, $usuario) && hash_equals($contrasenaValida, $contrasena);
+$captchaCorrecto = $captchaGenerado !== '' && hash_equals($captchaGenerado, $captcha);
+$autenticado = $esPost && $captchaCorrecto && hash_equals($usuarioValido, $usuario) && hash_equals($contrasenaValida, $contrasena);
 
+if ($autenticado) {
+    session_regenerate_id(true);
+    $_SESSION['usuario'] = $usuario;
+    header('Location: inicio.php');
+    exit;
+}
 
-$mensajeExito = '<div>
-                        <h4 class="text-center mb-4">Bienvenido</h4>
-                        <h6 class="text-center mb-4">Ingreso de sesión exitoso</h6>
-
-                        <p class="mb-4">
-                            Este sistema está diseñado para la gestión y administracion de reservas de alojamientos temporales. 
-                            Permitirá controlar la disponibilidad de los departamentos y mantener el registro de huéspedes.
-                        </p>
-
-                        <a href="index.php" class="btn btn-outline-danger px-4 py-2">
-                            Cerrar Sesión
-                        </a>
-                    </div>';
+$motivo = $captchaCorrecto ? 'Usuario o contraseña incorrectos' : 'El código ingresado no coincide';
 
 $mensajeError = '<div>
                         <h4 class="text-center mb-4">Oops, algo salió mal</h4>
-                        <h6 class="text-center mb-4">Verificá los datos ingresados y volvé a intentarlo</h6>
+                        <h6 class="text-center mb-2">' . $motivo . '</h6>
+                        <p class="text-center mb-4">Verificá los datos ingresados y volvé a intentarlo</p>
 
                         <a href="index.php" class="btn btn-primary px-4 py-2">
                             ← Volver al formulario
                         </a>
                     </div>';
 
+$ocultar_nav = true; // variable para ocultar el header
 require 'includes/header.php';
 ?>
 
@@ -269,13 +272,7 @@ require 'includes/header.php';
                         </svg>
                     </div>
                     
-                    <?php
-                        if ($autenticado) {
-                            echo $mensajeExito;
-                        } else {
-                            echo $mensajeError;
-                        }
-?>
+                    <?php echo $mensajeError; ?>
                     
                 </div>
             </div>

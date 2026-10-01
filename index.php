@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (isset($_SESSION['usuario'])) {
+    header('Location: inicio.php');
+    exit;
+}
+
+$_SESSION['captcha'] = substr(str_shuffle('ABCDEFGHJKLMNPQRSTUVWXYZ23456789'), 0, 5);
+
 $ocultar_nav = true; // variable para ocultar el header en la pagina de login
 require 'includes/header.php';
 ?>
@@ -250,11 +259,37 @@ require 'includes/header.php';
                     </div>
                     
                     <!-- Campo Contraseña -->
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="contrasena" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="contrasena" name="contrasena">
                     </div>
-                    
+
+                    <div class="mb-4">
+                        <label for="captcha" class="form-label">Ingresá el código</label>
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="captcha-codigo flex-grow-1">
+                                <svg height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                                    <?php for ($i = 0; $i < 30; $i++): ?>
+                                        <circle cx="<?= rand(0, 200) ?>" cy="<?= rand(0, 60) ?>" r="<?= rand(1, 2) ?>" />
+                                    <?php endfor; ?>
+
+                                    <?php for ($i = 0; $i < strlen($_SESSION['captcha']); $i++):
+                                        $x = 28 + $i * 36;
+                                        $y = rand(38, 46);
+                                    ?>
+                                        <text x="<?= $x ?>" y="<?= $y ?>" font-size="<?= rand(26, 34) ?>" transform="rotate(<?= rand(-25, 25) ?> <?= $x ?> <?= $y ?>)"><?= $_SESSION['captcha'][$i] ?></text>
+                                    <?php endfor; ?>
+
+                                    <?php for ($i = 0; $i < 5; $i++): ?>
+                                        <line x1="<?= rand(0, 200) ?>" y1="<?= rand(0, 60) ?>" x2="<?= rand(0, 200) ?>" y2="<?= rand(0, 60) ?>" />
+                                    <?php endfor; ?>
+                                </svg>
+                            </div>
+                            <a href="index.php" class="btn btn-refrescar" title="Generar otro código">↻</a>
+                        </div>
+                        <input type="text" class="form-control" id="captcha" name="captcha" autocomplete="off">
+                    </div>
+
                     <!-- Boton Ingresar -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary text-white" id="btnIngresar" disabled >
