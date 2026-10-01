@@ -50,3 +50,37 @@ footer {
   border-color: var(--dust-primary);
   box-shadow: 0 0 0 0.25rem rgba(130, 110, 81, 0.25);
 }
+
+.captcha-codigo {
+  background-color: var(--dust-bg);
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px;
+  user-select: none;
+}
+
+.captcha-codigo text {
+  fill: var(--dust-dark);
+  font-family: monospace;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.captcha-codigo line {
+  stroke: var(--dust-tertiary);
+  stroke-width: 2;
+}
+
+.captcha-codigo circle {
+  fill: var(--dust-secondary);
+}
+
+.btn-refrescar {
+  color: var(--dust-primary);
+  border: 1px solid var(--dust-tertiary);
+  font-size: 1.4rem;
+}
+.btn-refrescar:hover {
+  background-color: var(--dust-primary);
+  color: white;
+}

@@ -1,14 +1,16 @@
 // Se recuperan los input y el boton del formulario
 const inputUsuario = document.getElementById("usuario");
 const inputContrasena = document.getElementById("contrasena");
+const inputCaptcha = document.getElementById("captcha");
 const btnIngresar = document.getElementById("btnIngresar");
 
 // Se comprueba que los input no esten vacios o unicamente con espacios en blanco
 function validarDatos() {
   const valorUsuario = inputUsuario.value.trim();
   const valorContrasena = inputContrasena.value.trim();
+  const valorCaptcha = inputCaptcha.value.trim();
 
-  if (valorUsuario !== "" && valorContrasena !== "")
+  if (valorUsuario !== "" && valorContrasena !== "" && valorCaptcha !== "")
     btnIngresar.disabled = false;
   else btnIngresar.disabled = true;
 }
@@ -16,3 +18,4 @@ function validarDatos() {
 // Se agregan los escuchadores para detectar cambios en los input
 inputUsuario?.addEventListener("input", validarDatos);
 inputContrasena?.addEventListener("input", validarDatos);
+inputCaptcha?.addEventListener("input", validarDatos);
