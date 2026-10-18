@@ -21,6 +21,10 @@ require 'includes/header.php';
                     Permitirá controlar la disponibilidad de los departamentos y mantener el registro de huéspedes.
                 </p>
 
+                <a href="departamentos.php" class="btn btn-primary px-4 py-2 me-2">
+                    Gestionar departamentos
+                </a>
+
                 <a href="cerrarSesion.php" class="btn btn-outline-danger px-4 py-2">
                     Cerrar Sesión
                 </a>

@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-$usuarioValido = 'fcytuader';
-$contrasenaValida = 'programacionavanzada';
+require 'includes/conexion.php';
 
 $usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
 $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
@@ -12,7 +11,18 @@ unset($_SESSION['captcha']);
 
 $esPost = $_SERVER['REQUEST_METHOD'] === 'POST';
 $captchaCorrecto = $captchaGenerado !== '' && hash_equals($captchaGenerado, $captcha);
-$autenticado = $esPost && $captchaCorrecto && hash_equals($usuarioValido, $usuario) && hash_equals($contrasenaValida, $contrasena);
+$autenticado = false;
+
+if ($esPost && $captchaCorrecto && $conexion !== null) {
+    try {
+        $consulta = $conexion->prepare('SELECT contrasena FROM usuarios WHERE usuario = ?');
+        $consulta->execute([$usuario]);
+        $registro = $consulta->fetch(PDO::FETCH_ASSOC);
+        $autenticado = $registro !== false && password_verify($contrasena, $registro['contrasena']);
+    } catch (PDOException $e) {
+        $conexion = null;
+    }
+}
 
 if ($autenticado) {
     session_regenerate_id(true);
@@ -21,12 +31,18 @@ if ($autenticado) {
     exit;
 }
 
-$motivo = $captchaCorrecto ? 'Usuario o contraseña incorrectos' : 'El código ingresado no coincide';
+if ($conexion === null) {
+    $motivo = 'No pudimos conectarnos con la base de datos';
+    $detalle = 'El servicio no está disponible en este momento, intentá nuevamente en unos minutos';
+} else {
+    $motivo = $captchaCorrecto ? 'Usuario o contraseña incorrectos' : 'El código ingresado no coincide';
+    $detalle = 'Verificá los datos ingresados y volvé a intentarlo';
+}
 
 $mensajeError = '<div>
                         <h4 class="text-center mb-4">Oops, algo salió mal</h4>
                         <h6 class="text-center mb-2">' . $motivo . '</h6>
-                        <p class="text-center mb-4">Verificá los datos ingresados y volvé a intentarlo</p>
+                        <p class="text-center mb-4">' . $detalle . '</p>
 
                         <a href="index.php" class="btn btn-primary px-4 py-2">
                             ← Volver al formulario
